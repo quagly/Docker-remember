@@ -1,0 +1,26 @@
+# build
+docker build -t {{NAME}} .
+
+# get shell
+docker run -it {{NAME}} bash
+
+# get login shell
+docker run -it {{NAME}} bash -l
+
+# get root shell on running container
+docker exec -u 0 -it {{NAME}} bash 
+
+# go to project
+cd python
+
+# run tests, coverage, and generate api docs
+tox 
+
+# exit
+exit
+
+# delete all Docker containers / layers
+docker system prune -a
+
+# show disk usage
+docker system df

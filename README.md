@@ -1,2 +1,4 @@
 # Docker-remember
-getting started with docker and need a place to put stuff
+Getting started with docker
+current setup is three containers built on eachother
+root->home->python

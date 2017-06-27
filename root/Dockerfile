@@ -16,8 +16,19 @@ RUN yum groups mark install "Development Tools";\
 	yum groups mark convert "Development Tools";\
   yum -y groupinstall "Development Tools";
 
-# install additional packages required to compile python
-RUN yum -y install zlib-devel bzip2-devel readline-devel sqlite-devel openssl openssl-devel
+# install additional packages required to compile python, tmux
+RUN yum -y install zlib-devel bzip2-devel readline-devel sqlite-devel openssl openssl-devel libevent libevent-devel
+
+WORKDIR /tmp
+# install latest tmux.  Latest centos version is only 1.8 and is not compatible with my tmux.conf
+RUN git clone https://github.com/tmux/tmux.git &&\
+	cd tmux && \
+	sh autogen.sh && \
+	./configure && \
+	make && \
+	make install && \
+	rm -rf /tmp/tmux 
+	
 
 # setup user with no files in home directory
 RUN mkdir /tmp/skel;\

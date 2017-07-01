@@ -10,9 +10,15 @@ RUN curl -s "https://get.sdkman.io" | bash
 RUN	source "/home/developer/.sdkman/bin/sdkman-init.sh"
 
 # need 'yes' because sdk is a shell function, not an executable
-RUN yes | /bin/bash -l -c 'sdk install java'
-RUN yes | /bin/bash -l -c 'sdk install groovy'
-RUN yes | /bin/bash -l -c 'sdk install gradle'
+RUN yes | /bin/bash -l -c 'sdk install java' && \ 
+    yes | /bin/bash -l -c 'sdk install groovy' && \
+    yes | /bin/bash -l -c 'sdk install gradle'
+
+# cleanup sdk
+RUN yes | /bin/bash -l -c 'sdk flush candidates' && \
+	  yes | /bin/bash -l -c 'sdk flush broadcast' && \
+  	yes | /bin/bash -l -c 'sdk flush archives' && \
+	  yes | /bin/bash -l -c 'sdk flush temp'
 
 # get my groovy project 
 RUN echo '20170629' >/dev/null;\

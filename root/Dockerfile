@@ -6,9 +6,12 @@ RUN echo -e 'proxy=http://proxy.regence.com:8080' >> /etc/yum.conf
 
 RUN yum -y update;
 
-# not using epel-release yet and it uses https by default which I don't have working through the proxy
+# get epel-release for additional packages and set to us http rather than https 
+# certificate is untrusted by regence
+# you can see this by trying https and then running
+# URLGRABBER_DEBUG=1 yum check-update
 RUN yum -y install epel-release;\
-	# use http for epel-release as I haven't go https working
+	# use http for epel-release 
 	sed -i "s/mirrorlist=https/mirrorlist=http/" /etc/yum.repos.d/epel.repo 
 
 # install development tools.  Just for compiling python we need more than half of them.

@@ -27,7 +27,7 @@ RUN pip --no-cache-dir install tox
 
 # get my python project
 RUN echo '20170625' >/dev/null;\
-		git clone https://github.com/quagly/cfn-manage.git ~/python
+		git clone https://github.com/quagly/cfn-manage.git ~/python/cfn-manage
 
 # set default AWS region
 RUN mkdir ~/.aws &&\

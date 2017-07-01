@@ -24,3 +24,22 @@ docker system prune -a
 
 # show disk usage
 docker system df
+
+# list all containers and images
+docker ps -a
+
+# list images
+docker image ls
+
+# remove image
+docker rmi <Image Name>
+
+# stop all containers
+docker stop $(docker ps -a -q) 
+
+# remove all containers
+docker rm $(docker ps -a -q) 
+
+# remove all dangling images
+docker rmi $(docker  image ls -q --filter "dangling=true")
+

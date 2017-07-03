@@ -1,18 +1,17 @@
 FROM centos:centos7
 MAINTAINER Michael West <Michael.West@cambiahealth.com>
 
-# set up yum http proxy, I haven't been able to get https proxy to work
-RUN echo -e 'proxy=http://proxy.regence.com:8080' >> /etc/yum.conf
+# set up yum http proxy if needed for example
+#RUN echo -e 'proxy=http://proxy.regence.com:8080' >> /etc/yum.conf
+##PROXY##
 
 RUN yum -y update;
 
-# get epel-release for additional packages and set to us http rather than https 
-# certificate is untrusted by regence
-# you can see this by trying https and then running
-# URLGRABBER_DEBUG=1 yum check-update
-RUN yum -y install epel-release;\
-	# use http for epel-release 
-	sed -i "s/mirrorlist=https/mirrorlist=http/" /etc/yum.repos.d/epel.repo 
+RUN yum -y install epel-release
+
+# replace with sed command to change https to http for epel repo if needed
+#RUN sed -i "s/mirrorlist=https/mirrorlist=http/" /etc/yum.repos.d/epel.repo
+##SED##
 
 # install development tools.  Just for compiling python we need more than half of them.
 RUN yum groups mark install "Development Tools";\

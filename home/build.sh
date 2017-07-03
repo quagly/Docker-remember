@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker build -t home .
+docker build --squash --tag home .

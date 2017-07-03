@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker build -t python .
+docker build --squash --tag python .

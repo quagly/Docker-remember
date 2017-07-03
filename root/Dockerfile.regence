@@ -11,7 +11,7 @@ MAINTAINER Michael West <Michael.West@cambiahealth.com>
 
 # set up yum http proxy if needed for example
 #RUN echo -e 'proxy=http://proxy.regence.com:8080' >> /etc/yum.conf
-##& PROXY##
+RUN echo -e "proxy=http://proxy.regence.com:8080" >> /etc/yum.conf
 
 RUN yum -y update;
 
@@ -19,7 +19,7 @@ RUN yum -y install epel-release
 
 # replace with sed command to change https to http for epel repo if needed
 #RUN sed -i "s/mirrorlist=https/mirrorlist=http/" /etc/yum.repos.d/epel.repo
-##& SED##
+RUN sed -i "s/mirrorlist=https/mirrorlist=http/" /etc/yum.repos.d/epel.repo
 
 # install development tools.  Just for compiling python we need more than half of them.
 RUN yum groups mark install "Development Tools";\

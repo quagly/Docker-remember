@@ -1,25 +1,4 @@
-FROM centos:centos7
-MAINTAINER Michael West <Michael.West@cambiahealth.com>
-
-# note that this can be used as a mustache template 
-# intention is to set proxy and set epel repository to use http
-# to support use as a Dockerfile mustache delimiter is ## ## instead of {{ }}
-# because the delimiter is changed to get output that is not HTML escaped use
-#    ##& VAR##
-# as described in the docs
-# https://mustache.github.io/mustache.5.html
-
-# set up yum http proxy if needed for example
-#RUN echo -e 'proxy=http://proxy.regence.com:8080' >> /etc/yum.conf
-##& PROXY##
-
-RUN yum -y update;
-
-RUN yum -y install epel-release
-
-# replace with sed command to change https to http for epel repo if needed
-#RUN sed -i "s/mirrorlist=https/mirrorlist=http/" /etc/yum.repos.d/epel.repo
-##& SED##
+#
 
 # install development tools.  Just for compiling python we need more than half of them.
 RUN yum groups mark install "Development Tools";\
@@ -47,3 +26,4 @@ RUN mkdir /tmp/skel;\
 # install user packages
 RUN yum -y install stow vim;\
 	yum clean all
+

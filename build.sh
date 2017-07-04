@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker build --squash --tag full .
+docker build --no-cache --squash --tag full . 2>&1 | tee log/fullbuild.log

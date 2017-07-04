@@ -7,3 +7,6 @@
 # ignore Dockerfile.regence
 # generage this by running regence.py as needed
 Dockerfile.regence
+
+# ignore log files
+/log

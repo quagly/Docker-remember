@@ -11,6 +11,8 @@ RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 
 ENV PYENV_ROOT $HOME/.pyenv
 ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
+# required compilation option for Gildas-Python binding
+ENV PYTHON_CONFIGURE_OPTS="--enable-shared"
 
 RUN pyenv install 2.7.13
 RUN pyenv install 3.3.6 

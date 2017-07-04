@@ -25,12 +25,17 @@ RUN yum -y install epel-release
 # this was my first Dockerfile.  Now I understand taht installing a group like this is not best practice
 # install only what you need.  I've lost track of exactly what I need now.  Try taking this out and see what 
 # failed due to missing dependencies.  I think I will be missing some python compile dependencies.
-RUN yum groups mark install "Development Tools";\
-	yum groups mark convert "Development Tools";\
-  yum -y groupinstall "Development Tools";
+#RUN yum groups mark install "Development Tools";\
+#	yum groups mark convert "Development Tools";\
+#  yum -y groupinstall "Development Tools";
 
-# install additional packages required to compile python, tmux
-RUN yum -y install zlib-devel bzip2-devel readline-devel sqlite-devel openssl openssl-devel libevent libevent-devel
+# install additional packages required to compile python
+# patch is only required by python 3.3 to patch ssl
+# tmux requires aclocal command from automake package.  Too bad as it only needs aclocal and automake has many depenencies.  
+# zip and unzip is required by sdkman for java/groovy
+RUN yum -y install gcc git curl make patch zlib-devel bzip2-devel readline readline-devel sqllite sqlite-devel openssl openssl-devel libevent libevent-devel && \
+	  yum -y install automake && \
+		yum -y install zip unzip
 
 WORKDIR /tmp
 # install latest tmux.  Latest centos version is only 1.8 and is not compatible with my tmux.conf

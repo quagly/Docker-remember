@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker run -rm -it root bash
+docker run --rm -it root bash

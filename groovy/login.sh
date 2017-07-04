@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # login shell
-docker run -it groovyenv bash -l
+docker run --rm -it groovyenv bash -l

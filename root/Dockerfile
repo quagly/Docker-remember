@@ -22,6 +22,9 @@ RUN yum -y install epel-release
 ##& SED##
 
 # install development tools.  Just for compiling python we need more than half of them.
+# this was my first Dockerfile.  Now I understand taht installing a group like this is not best practice
+# install only what you need.  I've lost track of exactly what I need now.  Try taking this out and see what 
+# failed due to missing dependencies.  I think I will be missing some python compile dependencies.
 RUN yum groups mark install "Development Tools";\
 	yum groups mark convert "Development Tools";\
   yum -y groupinstall "Development Tools";

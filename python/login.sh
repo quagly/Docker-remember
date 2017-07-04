@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # login shell
-docker run -it python bash -l
+docker run -rm -it python bash -l

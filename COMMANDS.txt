@@ -43,3 +43,7 @@ docker rm $(docker ps -a -q)
 # remove all dangling images
 docker rmi $(docker  image ls -q --filter "dangling=true")
 
+# create container from image and login
+# useful for debugging failed builds
+# login to the last successful image
+docker run --rm -it e191e8b12867 bash -il

@@ -131,7 +131,7 @@ RUN	echo -e 'source "/home/developer/.sdkman/bin/sdkman-init.sh"' >> $HOME/.bash
 
 # need 'yes' because sdk is a shell function, not an executable
 RUN yes | /bin/bash -l -c 'sdk install java' && \
-RUN yes | /bin/bash -l -c 'sdk install groovy' && \
+    yes | /bin/bash -l -c 'sdk install groovy' && \
     yes | /bin/bash -l -c 'sdk install gradle'
 
 # cleanup sdk
@@ -143,3 +143,7 @@ RUN yes | /bin/bash -l -c 'sdk flush candidates' && \
 # get my groovy project 
  RUN echo '20170629' >/dev/null;\
     git clone https://github.com/quagly/neo4j-experiments-as-tests.git ~/groovy/neo4j
+
+# get test script and run it    
+COPY test.sh /home/developer
+RUN /home/developer/test.sh 

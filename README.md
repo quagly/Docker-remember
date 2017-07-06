@@ -7,12 +7,11 @@ current setup is for containers to be built on eachother
 
 centos:centos7->root->home->python->groovy
 
-or create a single Dockerfile run 
-	
+Basic use is to create Dockerfile, build, run test.
+
 	$./catDockerfiles.sh
-
-which creates a single Dockerfile from all the child dockerfiles and adds test.sh
-
+  $./build.sh
+  $./run.sh
 
 TODO:
 

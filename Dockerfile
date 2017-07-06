@@ -146,4 +146,4 @@ RUN yes | /bin/bash -l -c 'sdk flush candidates' && \
 
 # get test script and run it    
 COPY test.sh /home/developer
-RUN /home/developer/test.sh 
+CMD /home/developer/test.sh 

@@ -15,6 +15,6 @@ cat <<HERE >> Dockerfile
 
 # get test script and run it    
 COPY test.sh /home/developer
-RUN /home/developer/test.sh 
+CMD /home/developer/test.sh 
 HERE
 

@@ -13,6 +13,7 @@ RUN echo -e "export SDKMAN_DIR=/home/developer/.sdkman" >> $HOME/.bash_profile
 RUN	echo -e 'source "/home/developer/.sdkman/bin/sdkman-init.sh"' >> $HOME/.bash_profile
 
 # need 'yes' because sdk is a shell function, not an executable
+# must use login shell to pickup profile environment from above
 RUN yes | /bin/bash -l -c 'sdk install java' && \
     yes | /bin/bash -l -c 'sdk install groovy' && \
     yes | /bin/bash -l -c 'sdk install gradle'

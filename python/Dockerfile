@@ -1,5 +1,5 @@
 FROM home 
-MAINTAINER Michael West <Michael.West@cambiahealth.com>
+LABEL maintainer="Michael West <Michael.West@cambiahealth.com>"
 # test by cd to python dir and run tox
 
 USER developer

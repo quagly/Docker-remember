@@ -1,5 +1,5 @@
 FROM python 
-MAINTAINER Michael West <Michael.West@cambiahealth.com>
+LABEL maintainer="Michael West <Michael.West@cambiahealth.com>"
 
 USER developer
 ENV HOME  /home/developer

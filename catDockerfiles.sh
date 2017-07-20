@@ -5,7 +5,7 @@
 cp root/Dockerfile .
 
 # remove headers from child Dockerfiles
-cat home/Dockerfile python/Dockerfile groovy/Dockerfile | sed s/^FROM.*// | sed s/^MAINTAINER.*// >> Dockerfile
+cat home/Dockerfile python/Dockerfile groovy/Dockerfile clojure/Dockerfile | sed s/^FROM.*// | sed s/^LABEL.*// >> Dockerfile
 
 # add testing at the end
 # note that I am hardcoding /home/developer

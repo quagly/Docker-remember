@@ -1,5 +1,5 @@
 FROM centos:centos7
-MAINTAINER Michael West <Michael.West@cambiahealth.com>
+LABEL maintainer="Michael West <Michael.West@cambiahealth.com>"
 
 # note that this can be used as a mustache template 
 # intention is to set proxy and set epel repository to use http

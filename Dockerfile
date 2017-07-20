@@ -1,5 +1,5 @@
 FROM centos:centos7
-MAINTAINER Michael West <Michael.West@cambiahealth.com>
+LABEL maintainer="Michael West <Michael.West@cambiahealth.com>"
 
 # note that this can be used as a mustache template 
 # intention is to set proxy and set epel repository to use http
@@ -62,7 +62,7 @@ USER developer
 ENV HOME /home/developer
 
 # set up home dir
-RUN echo '20170628' > /dev/null &&\
+RUN echo '20170721' > /dev/null &&\
 	 git clone https://github.com/quagly/dotfiles.git $HOME/.dotfiles
 
 WORKDIR $HOME/.dotfiles
@@ -79,6 +79,9 @@ RUN git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vund
 # added true to the end until I can figure it out
 # maybe still related to no interactivity despite -E?
 RUN vim -E -u NONE -S $HOME/.vimrc +PluginInstall +qall || true 
+
+# add a bin directory for my executable that will be in $PATH
+RUN mkdir $HOME/bin 
 
 
 # test by cd to python dir and run tox
@@ -131,6 +134,7 @@ RUN echo -e "export SDKMAN_DIR=/home/developer/.sdkman" >> $HOME/.bash_profile
 RUN	echo -e 'source "/home/developer/.sdkman/bin/sdkman-init.sh"' >> $HOME/.bash_profile
 
 # need 'yes' because sdk is a shell function, not an executable
+# must use login shell to pickup profile environment from above
 RUN yes | /bin/bash -l -c 'sdk install java' && \
     yes | /bin/bash -l -c 'sdk install groovy' && \
     yes | /bin/bash -l -c 'sdk install gradle'
@@ -144,6 +148,29 @@ RUN yes | /bin/bash -l -c 'sdk flush candidates' && \
 # get my groovy project 
  RUN echo '20170629' >/dev/null;\
     git clone https://github.com/quagly/neo4j-experiments-as-tests.git ~/groovy/neo4j
+
+
+
+USER developer
+ENV HOME  /home/developer
+# this path setting should go in home dockerfile
+ENV PATH $PATH:$HOME/bin
+WORKDIR $HOME
+
+# note need to used login shell to pickup sdkman java install so that lein can find java
+RUN curl -L -s http://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > \
+    $HOME/bin/lein \
+ && chmod 0755 $HOME/bin/lein \
+ && /bin/bash --login -c "lein upgrade"
+
+# get sample code from pragmatic programmer book and unpack into clujure dir
+ADD shcloj3-code.tar.gz /home/developer/clojure
+
+# resolve dependencies for sample code
+# this currently fails with:
+#  java.io.FileNotFoundException: /home/developer/clojure/code/target/stale/leiningen.core.classpath.extract-native-dependencies (No such file or directory)   
+# WORKDIR $HOME/clojure/code
+# RUN /bin/bash --login -c "lein deps"
 
 # get test script and run it    
 COPY test.sh /home/developer

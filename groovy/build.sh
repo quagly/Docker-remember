@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker build --squash --tag groovyenv .
+docker build --squash --no-cache --tag groovyenv .

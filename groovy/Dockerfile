@@ -1,28 +1,36 @@
 FROM python 
 LABEL maintainer="Michael West <Michael.West@cambiahealth.com>"
+# uses login shell but that doesn't work with install sdk
+# it writes the files to $HOME/~/.sdkman instead of $HOME/.sdkman
+# but be related to echo problem below
 
 USER developer
 ENV HOME  /home/developer
 WORKDIR $HOME
 
-# install gvm
+SHELL ["/bin/bash", "--login", "-c"]  
+
+# install sdk
 RUN curl -s "https://get.sdkman.io" | bash 
+
+# use bash login shell                                                                                                                                                      
 # use /home/developer for strange error where SDKMAN_DIR cannot use ~ for HOME
 # symptom is file not found
-RUN echo -e "export SDKMAN_DIR=/home/developer/.sdkman" >> $HOME/.bash_profile 
-RUN	echo -e 'source "/home/developer/.sdkman/bin/sdkman-init.sh"' >> $HOME/.bash_profile
+# I think this is related to posix shell issue and existing .bash_profie settings
+# RUN echo -e "export SDKMAN_DIR=/home/developer/.sdkman" >> $HOME/.bash_profile 
+# RUN	echo -e 'source "/home/developer/.sdkman/bin/sdkman-init.sh"' >> $HOME/.bash_profile
 
 # need 'yes' because sdk is a shell function, not an executable
 # must use login shell to pickup profile environment from above
-RUN yes | /bin/bash -l -c 'sdk install java' && \
-    yes | /bin/bash -l -c 'sdk install groovy' && \
-    yes | /bin/bash -l -c 'sdk install gradle'
+RUN sdk install java && \
+	  sdk install groovy && \
+    sdk install gradle
 
 # cleanup sdk
-RUN yes | /bin/bash -l -c 'sdk flush candidates' && \
-	  yes | /bin/bash -l -c 'sdk flush broadcast' && \
-  	yes | /bin/bash -l -c 'sdk flush archives' && \
-	  yes | /bin/bash -l -c 'sdk flush temp'
+RUN sdk flush candidates && \
+	  sdk flush broadcast && \
+  	sdk flush archives && \
+	  sdk flush temp
 
 # get my groovy project 
  RUN echo '20170629' >/dev/null;\

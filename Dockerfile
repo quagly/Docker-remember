@@ -62,7 +62,7 @@ USER developer
 ENV HOME /home/developer
 
 # set up home dir
-RUN echo '20170721' > /dev/null &&\
+RUN echo '20170722' > /dev/null &&\
 	 git clone https://github.com/quagly/dotfiles.git $HOME/.dotfiles
 
 WORKDIR $HOME/.dotfiles
@@ -73,15 +73,18 @@ RUN stow bash;\
 
 WORKDIR $HOME
 
+
+
 # configure vim
-RUN git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim      
-# command to install plugins, returns non-zero exit code but works. 
+RUN git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
+# command to install plugins, returns non-zero exit code but works.
 # added true to the end until I can figure it out
 # maybe still related to no interactivity despite -E?
-RUN vim -E -u NONE -S $HOME/.vimrc +PluginInstall +qall || true 
+RUN vim -E -u NONE -S $HOME/.vimrc +PluginInstall +qall || true
 
 # add a bin directory for my executable that will be in $PATH
-RUN mkdir $HOME/bin 
+RUN mkdir $HOME/bin
+ENV PATH $PATH:$HOME/bin          
 
 
 # test by cd to python dir and run tox
@@ -161,27 +164,31 @@ RUN sdk flush candidates && \
 
 USER developer
 ENV HOME  /home/developer
-# this path setting should go in home dockerfile
-ENV PATH $PATH:$HOME/bin
+
 WORKDIR $HOME
 
 # use bash login shell
 SHELL ["/bin/bash", "--login", "-c"]
 
 # note need to used login shell to pickup sdkman java install so that lein can find java
- RUN curl -L -s http://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > \
+RUN curl -L -s http://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > \
     $HOME/bin/lein \
  && chmod 0755 $HOME/bin/lein \
  && lein upgrade
 
-# get sample code from pragmatic programmer book and unpack into clujure dir
-ADD shcloj3-code.tar.gz /home/developer/clojure
+# get sample code from pragmatic programmer book and unpack into clojure dir
+ADD shcloj3-code.tar.gz $HOME/clojure/
+USER root
+SHELL ["/bin/sh", "-c"]
+RUN chown -R developer:developer $HOME/clojure
 
+USER developer
+SHELL ["/bin/bash", "--login", "-c"]
 # resolve dependencies for sample code
 # this currently fails with:
 #  java.io.FileNotFoundException: /home/developer/clojure/code/target/stale/leiningen.core.classpath.extract-native-dependencies (No such file or directory)   
-# WORKDIR $HOME/clojure/code
-# RUN lein deps
+WORKDIR $HOME/clojure/code
+RUN lein deps
 
 # get test script and run it    
 COPY test.sh /home/developer

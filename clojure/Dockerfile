@@ -10,9 +10,10 @@ WORKDIR $HOME
 SHELL ["/bin/bash", "--login", "-c"]
 
 # note need to used login shell to pickup sdkman java install so that lein can find java
-RUN curl -L -s http://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > \
-    $HOME/bin/lein \
- && chmod 0755 $HOME/bin/lein \
+# RUN curl -L -s http://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > \
+COPY lein $HOME/bin/lein
+
+RUN chmod 0755 $HOME/bin/lein \
  && lein upgrade
 
 # get sample code from pragmatic programmer book and unpack into clojure dir

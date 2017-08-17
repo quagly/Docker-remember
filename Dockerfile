@@ -94,7 +94,7 @@ ENV HOME  /home/developer
 WORKDIR $HOME
 
 # install all needed versions of python
-RUN echo '201707119' > /dev/null;\
+RUN echo '20170812' > /dev/null;\
 	 git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 
 ENV PYENV_ROOT $HOME/.pyenv
@@ -104,8 +104,8 @@ ENV PYTHON_CONFIGURE_OPTS="--enable-shared"
 
 RUN pyenv install 2.7.13
 RUN pyenv install 3.3.6 
-RUN pyenv install 3.4.6 
-RUN pyenv install 3.5.3 
+RUN pyenv install 3.4.7 
+RUN pyenv install 3.5.3
 RUN pyenv install 3.6.2
 RUN pyenv rehash
 
@@ -172,7 +172,7 @@ SHELL ["/bin/bash", "--login", "-c"]
 
 # note need to used login shell to pickup sdkman java install so that lein can find java
 RUN curl -L -s http://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > \
-    $HOME/bin/lein \
+ $HOME/bin/lein \
  && chmod 0755 $HOME/bin/lein \
  && lein upgrade
 
@@ -184,10 +184,18 @@ RUN chown -R developer:developer $HOME/clojure
 
 USER developer
 SHELL ["/bin/bash", "--login", "-c"]
+
+
+# get my clojure project
+RUN echo '20170815' >/dev/null;\
+    git clone https://github.com/quagly/learn-clojure.git ~/clojure/learn-clojure
+
 # resolve dependencies for sample code
 # this currently fails with:
 #  java.io.FileNotFoundException: /home/developer/clojure/code/target/stale/leiningen.core.classpath.extract-native-dependencies (No such file or directory)   
 WORKDIR $HOME/clojure/code
+RUN lein deps
+WORKDIR $HOME/clojure/learn-clojure
 RUN lein deps
 
 # get test script and run it    

@@ -7,7 +7,7 @@ ENV HOME  /home/developer
 WORKDIR $HOME
 
 # install all needed versions of python
-RUN echo '201707119' > /dev/null;\
+RUN echo '20170812' > /dev/null;\
 	 git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 
 ENV PYENV_ROOT $HOME/.pyenv
@@ -17,8 +17,8 @@ ENV PYTHON_CONFIGURE_OPTS="--enable-shared"
 
 RUN pyenv install 2.7.13
 RUN pyenv install 3.3.6 
-RUN pyenv install 3.4.6 
-RUN pyenv install 3.5.3 
+RUN pyenv install 3.4.7 
+RUN pyenv install 3.5.3
 RUN pyenv install 3.6.2
 RUN pyenv rehash
 

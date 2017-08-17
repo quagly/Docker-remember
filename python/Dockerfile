@@ -22,7 +22,7 @@ RUN pyenv install 3.5.3
 RUN pyenv install 3.6.2
 RUN pyenv rehash
 
-RUN pyenv global 2.7.13
+RUN pyenv global 2.6.2
 
 # install application demonstrating using tox to test multiple python versions
 # and coverage report and api documentation 

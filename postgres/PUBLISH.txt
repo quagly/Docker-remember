@@ -1,0 +1,12 @@
+# to push to repo
+
+# login to repo
+docker login
+username: quagly
+password: from keychain
+
+# tag
+docker tag postgrestest quagly/mypostgres
+
+# push
+docker push quagly/mypostgres

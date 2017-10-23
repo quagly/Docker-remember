@@ -1,0 +1,70 @@
+Sending build context to Docker daemon  6.144kB
+Step 1/2 : FROM postgres
+latest: Pulling from library/postgres
+3e17c6eae66c: Pulling fs layer
+3d89ae9a47e4: Pulling fs layer
+f7726fda7efe: Pulling fs layer
+d1838499bd8f: Pulling fs layer
+a5ec5aa60735: Pulling fs layer
+1571d7170291: Pulling fs layer
+0d6e41e13732: Pulling fs layer
+787e3c45a9bb: Pulling fs layer
+7b234cf83b22: Pulling fs layer
+3a8ad2440289: Pulling fs layer
+9351993374c0: Pulling fs layer
+a8f3575e09a1: Pulling fs layer
+a4c4b2ff0c3a: Pulling fs layer
+d1838499bd8f: Waiting
+7b234cf83b22: Waiting
+a8f3575e09a1: Waiting
+3a8ad2440289: Waiting
+a4c4b2ff0c3a: Waiting
+9351993374c0: Waiting
+0d6e41e13732: Waiting
+1571d7170291: Waiting
+787e3c45a9bb: Waiting
+a5ec5aa60735: Waiting
+f7726fda7efe: Verifying Checksum
+f7726fda7efe: Download complete
+3d89ae9a47e4: Verifying Checksum
+3d89ae9a47e4: Download complete
+d1838499bd8f: Download complete
+1571d7170291: Download complete
+0d6e41e13732: Verifying Checksum
+0d6e41e13732: Download complete
+a5ec5aa60735: Verifying Checksum
+a5ec5aa60735: Download complete
+3e17c6eae66c: Verifying Checksum
+3e17c6eae66c: Download complete
+7b234cf83b22: Verifying Checksum
+7b234cf83b22: Download complete
+3a8ad2440289: Verifying Checksum
+3a8ad2440289: Download complete
+9351993374c0: Download complete
+a8f3575e09a1: Download complete
+a4c4b2ff0c3a: Verifying Checksum
+a4c4b2ff0c3a: Download complete
+787e3c45a9bb: Verifying Checksum
+787e3c45a9bb: Download complete
+3e17c6eae66c: Pull complete
+3d89ae9a47e4: Pull complete
+f7726fda7efe: Pull complete
+d1838499bd8f: Pull complete
+a5ec5aa60735: Pull complete
+1571d7170291: Pull complete
+0d6e41e13732: Pull complete
+787e3c45a9bb: Pull complete
+7b234cf83b22: Pull complete
+3a8ad2440289: Pull complete
+9351993374c0: Pull complete
+a8f3575e09a1: Pull complete
+a4c4b2ff0c3a: Pull complete
+Digest: sha256:73a1c4e98fb961bb4a5c55ad6428470a3303bd3966abc442fe937814f6bbc002
+Status: Downloaded newer image for postgres:latest
+ ---> b106d5a0dc75
+Step 2/2 : LABEL maintainer "Michael West <Michael.West@cambiahealth.com>"
+ ---> Running in b3d88a7dd726
+ ---> 304559ce5bb8
+Removing intermediate container b3d88a7dd726
+Successfully built 304559ce5bb8
+Successfully tagged mypostgres:latest

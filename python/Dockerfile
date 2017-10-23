@@ -1,4 +1,4 @@
-FROM home 
+FROM home
 LABEL maintainer="Michael West <Michael.West@cambiahealth.com>"
 # test by cd to python dir and run tox
 
@@ -7,7 +7,7 @@ ENV HOME  /home/developer
 WORKDIR $HOME
 
 # install all needed versions of python
-RUN echo '20170812' > /dev/null;\
+RUN echo '20170930' > /dev/null;\
 	 git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 
 ENV PYENV_ROOT $HOME/.pyenv
@@ -15,9 +15,9 @@ ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 # required compilation option for Gildas-Python binding
 ENV PYTHON_CONFIGURE_OPTS="--enable-shared"
 
-RUN pyenv install 2.7.13
-RUN pyenv install 3.3.6 
-RUN pyenv install 3.4.7 
+RUN pyenv install 2.7.14
+RUN pyenv install 3.3.7
+RUN pyenv install 3.4.7
 RUN pyenv install 3.5.3
 RUN pyenv install 3.6.2
 RUN pyenv rehash
@@ -25,7 +25,7 @@ RUN pyenv rehash
 RUN pyenv global 3.6.2
 
 # install application demonstrating using tox to test multiple python versions
-# and coverage report and api documentation 
+# and coverage report and api documentation
 RUN pip --no-cache-dir install tox
 
 # get my python project

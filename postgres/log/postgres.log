@@ -1,70 +1,77 @@
-Sending build context to Docker daemon  6.144kB
-Step 1/2 : FROM postgres
-latest: Pulling from library/postgres
-3e17c6eae66c: Pulling fs layer
-3d89ae9a47e4: Pulling fs layer
-f7726fda7efe: Pulling fs layer
-d1838499bd8f: Pulling fs layer
-a5ec5aa60735: Pulling fs layer
-1571d7170291: Pulling fs layer
-0d6e41e13732: Pulling fs layer
-787e3c45a9bb: Pulling fs layer
-7b234cf83b22: Pulling fs layer
-3a8ad2440289: Pulling fs layer
-9351993374c0: Pulling fs layer
-a8f3575e09a1: Pulling fs layer
-a4c4b2ff0c3a: Pulling fs layer
-d1838499bd8f: Waiting
-7b234cf83b22: Waiting
-a8f3575e09a1: Waiting
-3a8ad2440289: Waiting
-a4c4b2ff0c3a: Waiting
-9351993374c0: Waiting
-0d6e41e13732: Waiting
-1571d7170291: Waiting
-787e3c45a9bb: Waiting
-a5ec5aa60735: Waiting
-f7726fda7efe: Verifying Checksum
-f7726fda7efe: Download complete
-3d89ae9a47e4: Verifying Checksum
-3d89ae9a47e4: Download complete
-d1838499bd8f: Download complete
-1571d7170291: Download complete
-0d6e41e13732: Verifying Checksum
-0d6e41e13732: Download complete
-a5ec5aa60735: Verifying Checksum
-a5ec5aa60735: Download complete
-3e17c6eae66c: Verifying Checksum
-3e17c6eae66c: Download complete
-7b234cf83b22: Verifying Checksum
-7b234cf83b22: Download complete
-3a8ad2440289: Verifying Checksum
-3a8ad2440289: Download complete
-9351993374c0: Download complete
-a8f3575e09a1: Download complete
-a4c4b2ff0c3a: Verifying Checksum
-a4c4b2ff0c3a: Download complete
-787e3c45a9bb: Verifying Checksum
-787e3c45a9bb: Download complete
-3e17c6eae66c: Pull complete
-3d89ae9a47e4: Pull complete
-f7726fda7efe: Pull complete
-d1838499bd8f: Pull complete
-a5ec5aa60735: Pull complete
-1571d7170291: Pull complete
-0d6e41e13732: Pull complete
-787e3c45a9bb: Pull complete
-7b234cf83b22: Pull complete
-3a8ad2440289: Pull complete
-9351993374c0: Pull complete
-a8f3575e09a1: Pull complete
-a4c4b2ff0c3a: Pull complete
-Digest: sha256:73a1c4e98fb961bb4a5c55ad6428470a3303bd3966abc442fe937814f6bbc002
-Status: Downloaded newer image for postgres:latest
+Sending build context to Docker daemon  9.216kB
+Step 1/4 : FROM postgres
  ---> b106d5a0dc75
-Step 2/2 : LABEL maintainer "Michael West <Michael.West@cambiahealth.com>"
- ---> Running in b3d88a7dd726
- ---> 304559ce5bb8
-Removing intermediate container b3d88a7dd726
-Successfully built 304559ce5bb8
+Step 2/4 : LABEL maintainer "Michael West <Michael.West@cambiahealth.com>"
+ ---> Running in cbf37850b908
+ ---> 8a473fdf90a7
+Removing intermediate container cbf37850b908
+Step 3/4 : RUN apt-get update && apt-get install -y vim
+ ---> Running in d0f71fe6817f
+Ign:1 http://deb.debian.org/debian stretch InRelease
+Get:2 http://deb.debian.org/debian stretch-updates InRelease [91.0 kB]
+Get:3 http://deb.debian.org/debian stretch Release [118 kB]
+Get:4 http://security.debian.org stretch/updates InRelease [62.9 kB]
+Get:5 http://deb.debian.org/debian stretch Release.gpg [2,479 B]
+Get:6 http://apt.postgresql.org/pub/repos/apt stretch-pgdg InRelease [41.3 kB]
+Get:7 http://deb.debian.org/debian stretch-updates/main amd64 Packages [5,841 B]
+Get:8 http://security.debian.org stretch/updates/main amd64 Packages [226 kB]
+Get:9 http://deb.debian.org/debian stretch/main amd64 Packages [9,500 kB]
+Get:10 http://apt.postgresql.org/pub/repos/apt stretch-pgdg/main amd64 Packages [155 kB]
+Fetched 10.2 MB in 1s (5,936 kB/s)
+Reading package lists...
+[91mW: http://deb.debian.org/debian/dists/stretch-updates/InRelease: The key(s) in the keyring /etc/apt/trusted.gpg are ignored as the file is not readable by user '_apt' executing apt-key.
+W: http://deb.debian.org/debian/dists/stretch/Release.gpg: The key(s) in the keyring /etc/apt/trusted.gpg are ignored as the file is not readable by user '_apt' executing apt-key.
+W: http://security.debian.org/dists/stretch/updates/InRelease: The key(s) in the keyring /etc/apt/trusted.gpg are ignored as the file is not readable by user '_apt' executing apt-key.
+W: http://apt.postgresql.org/pub/repos/apt/dists/stretch-pgdg/InRelease: The key(s) in the keyring /etc/apt/trusted.gpg are ignored as the file is not readable by user '_apt' executing apt-key.
+[0mReading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  vim-common vim-runtime xxd
+Suggested packages:
+  ctags vim-doc vim-scripts
+The following NEW packages will be installed:
+  vim vim-common vim-runtime xxd
+0 upgraded, 4 newly installed, 0 to remove and 1 not upgraded.
+Need to get 6,731 kB of archives.
+After this operation, 31.1 MB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian stretch/main amd64 xxd amd64 2:8.0.0197-4+deb9u1 [132 kB]
+Get:2 http://deb.debian.org/debian stretch/main amd64 vim-common all 2:8.0.0197-4+deb9u1 [159 kB]
+Get:3 http://deb.debian.org/debian stretch/main amd64 vim-runtime all 2:8.0.0197-4+deb9u1 [5,407 kB]
+Get:4 http://deb.debian.org/debian stretch/main amd64 vim amd64 2:8.0.0197-4+deb9u1 [1,034 kB]
+[91mdebconf: delaying package configuration, since apt-utils is not installed
+[0mFetched 6,731 kB in 0s (13.0 MB/s)
+Selecting previously unselected package xxd.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 11816 files and directories currently installed.)
+Preparing to unpack .../xxd_2%3a8.0.0197-4+deb9u1_amd64.deb ...
+Unpacking xxd (2:8.0.0197-4+deb9u1) ...
+Selecting previously unselected package vim-common.
+Preparing to unpack .../vim-common_2%3a8.0.0197-4+deb9u1_all.deb ...
+Unpacking vim-common (2:8.0.0197-4+deb9u1) ...
+Selecting previously unselected package vim-runtime.
+Preparing to unpack .../vim-runtime_2%3a8.0.0197-4+deb9u1_all.deb ...
+Adding 'diversion of /usr/share/vim/vim80/doc/help.txt to /usr/share/vim/vim80/doc/help.txt.vim-tiny by vim-runtime'
+Adding 'diversion of /usr/share/vim/vim80/doc/tags to /usr/share/vim/vim80/doc/tags.vim-tiny by vim-runtime'
+Unpacking vim-runtime (2:8.0.0197-4+deb9u1) ...
+Selecting previously unselected package vim.
+Preparing to unpack .../vim_2%3a8.0.0197-4+deb9u1_amd64.deb ...
+Unpacking vim (2:8.0.0197-4+deb9u1) ...
+Processing triggers for mime-support (3.60) ...
+Setting up xxd (2:8.0.0197-4+deb9u1) ...
+Setting up vim-common (2:8.0.0197-4+deb9u1) ...
+Setting up vim-runtime (2:8.0.0197-4+deb9u1) ...
+Setting up vim (2:8.0.0197-4+deb9u1) ...
+update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/vim (vim) in auto mode
+update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/vimdiff (vimdiff) in auto mode
+update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/rvim (rvim) in auto mode
+update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/rview (rview) in auto mode
+update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/vi (vi) in auto mode
+update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/view (view) in auto mode
+update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/ex (ex) in auto mode
+update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/editor (editor) in auto mode
+ ---> ec5782bfed67
+Removing intermediate container d0f71fe6817f
+Step 4/4 : COPY init-user-db.sh /docker-entrypoint-initdb.d/
+ ---> aa05a5a31b55
+Successfully built 98d649a9759c
 Successfully tagged mypostgres:latest

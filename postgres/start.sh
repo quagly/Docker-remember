@@ -6,4 +6,5 @@
 
 # expose port 5432 to local port 5432
 # note assuming default bridge network
-docker run -p 5432:5432 --name postgrestest -d mypostgres
+# bind to localhost only, don't want to connect from anywhere
+docker run -p 127.0.0.1:5432:5432 --name postgrestest -d mypostgres

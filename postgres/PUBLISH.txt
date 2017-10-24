@@ -6,7 +6,7 @@ username: quagly
 password: from keychain
 
 # tag
-docker tag postgrestest quagly/mypostgres
+docker tag mypostgres quagly/mypostgres
 
 # push
 docker push quagly/mypostgres

@@ -6,7 +6,7 @@ USER developer
 ENV HOME  /home/developer
 WORKDIR $HOME
 
-# install all needed versions of python
+# install python install manager
 RUN echo '20170930' > /dev/null;\
 	 git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 
@@ -15,8 +15,12 @@ ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 # required compilation option for Gildas-Python binding
 ENV PYTHON_CONFIGURE_OPTS="--enable-shared"
 
+# add virtual environment support to pyenv
+RUN echo '20171223' > /dev/null;\
+  git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+
+# install all supported versions of python
 RUN pyenv install 2.7.14
-RUN pyenv install 3.3.7
 RUN pyenv install 3.4.7
 RUN pyenv install 3.5.4
 RUN pyenv install 3.6.3

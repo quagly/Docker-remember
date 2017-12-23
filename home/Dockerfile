@@ -1,11 +1,11 @@
-FROM root 
+FROM root
 LABEL maintainer="Michael West <Michael.West@cambiahealth.com>"
 
 USER developer
 ENV HOME /home/developer
 
 # set up home dir
-RUN echo '20170722' > /dev/null &&\
+RUN echo '20171225' > /dev/null &&\
 	 git clone https://github.com/quagly/dotfiles.git $HOME/.dotfiles
 
 WORKDIR $HOME/.dotfiles
@@ -27,4 +27,4 @@ RUN vim -E -u NONE -S $HOME/.vimrc +PluginInstall +qall || true
 
 # add a bin directory for my executable that will be in $PATH
 RUN mkdir $HOME/bin
-ENV PATH $PATH:$HOME/bin          
+ENV PATH $PATH:$HOME/bin

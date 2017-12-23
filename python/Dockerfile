@@ -18,11 +18,11 @@ ENV PYTHON_CONFIGURE_OPTS="--enable-shared"
 RUN pyenv install 2.7.14
 RUN pyenv install 3.3.7
 RUN pyenv install 3.4.7
-RUN pyenv install 3.5.3
-RUN pyenv install 3.6.2
+RUN pyenv install 3.5.4
+RUN pyenv install 3.6.3
 RUN pyenv rehash
 
-RUN pyenv global 3.6.2
+RUN pyenv global 3.6.3
 
 # install application demonstrating using tox to test multiple python versions
 # and coverage report and api documentation

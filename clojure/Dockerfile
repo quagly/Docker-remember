@@ -1,4 +1,4 @@
-FROM groovyenv 
+FROM groovyenv
 LABEL maintainer="Michael West <Michael.West@cambiahealth.com>"
 
 USER developer
@@ -24,15 +24,13 @@ RUN chown -R developer:developer $HOME/clojure
 USER developer
 SHELL ["/bin/bash", "--login", "-c"]
 
-
 # get my clojure project
 RUN echo '20170815' >/dev/null;\
     git clone https://github.com/quagly/learn-clojure.git ~/clojure/learn-clojure
 
 # resolve dependencies for sample code
-# this currently fails with:
-#  java.io.FileNotFoundException: /home/developer/clojure/code/target/stale/leiningen.core.classpath.extract-native-dependencies (No such file or directory)   
 WORKDIR $HOME/clojure/code
 RUN lein deps
 WORKDIR $HOME/clojure/learn-clojure
 RUN lein deps
+

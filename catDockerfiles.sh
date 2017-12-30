@@ -13,8 +13,9 @@ cat home/Dockerfile python/Dockerfile groovy/Dockerfile clojure/Dockerfile | sed
 # not the containers
 cat <<HERE >> Dockerfile
 
-# get test script and run it    
+WORKDIR /home/developer
+# get test script and run it
 COPY test.sh /home/developer
-CMD /home/developer/test.sh 
+CMD /home/developer/test.sh
 HERE
 

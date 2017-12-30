@@ -65,7 +65,7 @@ USER developer
 ENV HOME /home/developer
 
 # set up home dir
-RUN echo '20171225' > /dev/null &&\
+RUN echo '20171230' > /dev/null &&\
 	 git clone https://github.com/quagly/dotfiles.git $HOME/.dotfiles
 
 WORKDIR $HOME/.dotfiles
@@ -97,7 +97,7 @@ ENV HOME  /home/developer
 WORKDIR $HOME
 
 # install python install manager
-RUN echo '20170930' > /dev/null;\
+RUN echo '20170930' > /dev/null &&\
 	 git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 
 ENV PYENV_ROOT $HOME/.pyenv
@@ -105,30 +105,48 @@ ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 # required compilation option for Gildas-Python binding
 ENV PYTHON_CONFIGURE_OPTS="--enable-shared"
 
-# add virtual environment support to pyenv
-RUN echo '20171223' > /dev/null;\
-  git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
-
 # install all supported versions of python
-RUN pyenv install 2.7.14
-RUN pyenv install 3.4.7
-RUN pyenv install 3.5.4
-RUN pyenv install 3.6.3
-RUN pyenv rehash
+# and set default global python.
+# Note that default version takes effect at login
+# not in this file
+RUN pyenv install 2.7.14 && \
+  pyenv install 3.4.7 && \
+  pyenv install 3.5.4 && \
+  pyenv install 3.6.4 && \
+  pyenv rehash && \
+  pyenv global 3.6.4
 
-RUN pyenv global 3.6.3
+# use this python version for the remaining python commands
+# this works great for the docker build
+# but breaks use of a container as .python-version files
+# are ignored when this is set
+# docker does not seem to support unseting environmnent variables in a build
+ENV PYENV_VERSION=3.6.4
 
 # install application demonstrating using tox to test multiple python versions
 # and coverage report and api documentation
 RUN pip --no-cache-dir install tox
 
-# get my python project
-RUN echo '20170625' >/dev/null;\
+# get my cfn-manage python project
+RUN echo '20171230' >/dev/null && \
 		git clone https://github.com/quagly/cfn-manage.git ~/python/cfn-manage
 
+WORKDIR $HOME/python/cfn-manage
+
+# get cfn-manage dependencies and link live cfn-manange repo to python environment
+RUN python ./setup.py develop
+
+# get my cfn-use python project
+# and install dependencies into default python
+RUN echo '20171227' >/dev/null && \
+		git clone https://github.com/quagly/cfn-use.git ~/python/cfn-use && \
+    pip --no-cache-dir install -r ~/python/cfn-use/requirements.txt
+
 # set default AWS region
-RUN mkdir ~/.aws &&\
+RUN mkdir ~/.aws && \
  	  echo -e "[default]\nregion = us-west-2" > ~/.aws/config
+
+WORKDIR $HOME
 
 
 # uses login shell but that doesn't work with install sdk
@@ -193,19 +211,18 @@ RUN chown -R developer:developer $HOME/clojure
 USER developer
 SHELL ["/bin/bash", "--login", "-c"]
 
-
 # get my clojure project
 RUN echo '20170815' >/dev/null;\
     git clone https://github.com/quagly/learn-clojure.git ~/clojure/learn-clojure
 
 # resolve dependencies for sample code
-# this currently fails with:
-#  java.io.FileNotFoundException: /home/developer/clojure/code/target/stale/leiningen.core.classpath.extract-native-dependencies (No such file or directory)   
 WORKDIR $HOME/clojure/code
 RUN lein deps
 WORKDIR $HOME/clojure/learn-clojure
 RUN lein deps
 
-# get test script and run it    
+
+WORKDIR /home/developer
+# get test script and run it
 COPY test.sh /home/developer
-CMD /home/developer/test.sh 
+CMD /home/developer/test.sh

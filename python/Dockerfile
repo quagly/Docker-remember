@@ -38,7 +38,7 @@ ENV PYENV_VERSION=3.6.4
 RUN pip --no-cache-dir install tox
 
 # get my cfn-manage python project
-RUN echo '20171227' >/dev/null && \
+RUN echo '20171230' >/dev/null && \
 		git clone https://github.com/quagly/cfn-manage.git ~/python/cfn-manage
 
 WORKDIR $HOME/python/cfn-manage

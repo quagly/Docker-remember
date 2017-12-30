@@ -5,7 +5,7 @@ USER developer
 ENV HOME /home/developer
 
 # set up home dir
-RUN echo '20171225' > /dev/null &&\
+RUN echo '20171230' > /dev/null &&\
 	 git clone https://github.com/quagly/dotfiles.git $HOME/.dotfiles
 
 WORKDIR $HOME/.dotfiles

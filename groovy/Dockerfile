@@ -27,8 +27,9 @@ RUN sdk install java && \
     sdk install gradle
 
 # cleanup sdk
-RUN sdk flush candidates && \
-	  sdk flush broadcast && \
+# sdk flush candidates removes candidates file and caused candidates not to be found
+# could be fixed by touching file, and run sdk update and open a new shell
+RUN sdk flush broadcast && \
   	sdk flush archives && \
 	  sdk flush temp
 

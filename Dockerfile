@@ -65,7 +65,7 @@ USER developer
 ENV HOME /home/developer
 
 # set up home dir
-RUN echo '20170722' > /dev/null &&\
+RUN echo '20171225' > /dev/null &&\
 	 git clone https://github.com/quagly/dotfiles.git $HOME/.dotfiles
 
 WORKDIR $HOME/.dotfiles
@@ -87,7 +87,7 @@ RUN vim -E -u NONE -S $HOME/.vimrc +PluginInstall +qall || true
 
 # add a bin directory for my executable that will be in $PATH
 RUN mkdir $HOME/bin
-ENV PATH $PATH:$HOME/bin          
+ENV PATH $PATH:$HOME/bin
 
 
 # test by cd to python dir and run tox
@@ -96,7 +96,7 @@ USER developer
 ENV HOME  /home/developer
 WORKDIR $HOME
 
-# install all needed versions of python
+# install python install manager
 RUN echo '20170930' > /dev/null;\
 	 git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 
@@ -105,8 +105,12 @@ ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 # required compilation option for Gildas-Python binding
 ENV PYTHON_CONFIGURE_OPTS="--enable-shared"
 
+# add virtual environment support to pyenv
+RUN echo '20171223' > /dev/null;\
+  git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+
+# install all supported versions of python
 RUN pyenv install 2.7.14
-RUN pyenv install 3.3.7
 RUN pyenv install 3.4.7
 RUN pyenv install 3.5.4
 RUN pyenv install 3.6.3
@@ -135,16 +139,16 @@ USER developer
 ENV HOME  /home/developer
 WORKDIR $HOME
 
-SHELL ["/bin/bash", "--login", "-c"]  
+SHELL ["/bin/bash", "--login", "-c"]
 
 # install sdk
-RUN curl -s "https://get.sdkman.io" | bash 
+RUN curl -s "https://get.sdkman.io" | bash
 
-# use bash login shell                                                                                                                                                      
+# use bash login shell
 # use /home/developer for strange error where SDKMAN_DIR cannot use ~ for HOME
 # symptom is file not found
 # I think this is related to posix shell issue and existing .bash_profie settings
-# RUN echo -e "export SDKMAN_DIR=/home/developer/.sdkman" >> $HOME/.bash_profile 
+# RUN echo -e "export SDKMAN_DIR=/home/developer/.sdkman" >> $HOME/.bash_profile
 # RUN	echo -e 'source "/home/developer/.sdkman/bin/sdkman-init.sh"' >> $HOME/.bash_profile
 
 # need 'yes' because sdk is a shell function, not an executable
@@ -154,12 +158,13 @@ RUN sdk install java && \
     sdk install gradle
 
 # cleanup sdk
-RUN sdk flush candidates && \
-	  sdk flush broadcast && \
+# sdk flush candidates removes candidates file and caused candidates not to be found
+# could be fixed by touching file, and run sdk update and open a new shell
+RUN sdk flush broadcast && \
   	sdk flush archives && \
 	  sdk flush temp
 
-# get my groovy project 
+# get my groovy project
  RUN echo '20170629' >/dev/null;\
     git clone https://github.com/quagly/neo4j-experiments-as-tests.git ~/groovy/neo4j
 

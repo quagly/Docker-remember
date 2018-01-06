@@ -1,5 +1,5 @@
 FROM postgres
-LABEL maintainer="Michael West <Michael.West@cambiahealth.com>"
+LABEL maintainer="Michael West <quagly@gmail.com>"
 
 # lets have a vim editor
 RUN  echo '20171023' > /dev/null;\

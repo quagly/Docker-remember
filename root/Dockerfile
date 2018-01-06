@@ -1,5 +1,5 @@
 FROM centos:centos7
-LABEL maintainer="Michael West <Michael.West@cambiahealth.com>"
+LABEL maintainer="Michael West <quagly@gmail.com>"
 
 # note that this can be used as a mustache template
 # intention is to set proxy and set epel repository to use http
@@ -10,7 +10,7 @@ LABEL maintainer="Michael West <Michael.West@cambiahealth.com>"
 # https://mustache.github.io/mustache.5.html
 
 # set up yum http proxy if needed for example
-#RUN echo -e 'proxy=http://proxy.regence.com:8080' >> /etc/yum.conf
+#RUN echo -e 'proxy=http://proxy.domain.com:8080' >> /etc/yum.conf
 ##& PROXY##
 
 RUN yum -y update;
@@ -21,10 +21,7 @@ RUN yum -y install epel-release
 #RUN sed -i "s/mirrorlist=https/mirrorlist=http/" /etc/yum.repos.d/epel.repo
 ##& SED##
 
-# install development tools.  Just for compiling python we need more than half of them.
-# this was my first Dockerfile.  Now I understand taht installing a group like this is not best practice
-# install only what you need.  I've lost track of exactly what I need now.  Try taking this out and see what
-# failed due to missing dependencies.  I think I will be missing some python compile dependencies.
+# development tools has more than I need
 #RUN yum groups mark install "Development Tools";\
 #	yum groups mark convert "Development Tools";\
 #  yum -y groupinstall "Development Tools";
@@ -39,6 +36,7 @@ RUN yum -y install gcc git curl make patch zlib-devel bzip2-devel readline readl
 
 WORKDIR /tmp
 # install latest tmux.  Latest centos version is only 1.8 and is not compatible with my tmux.conf
+# alternativly add yum repo with latest packages like this
 RUN git clone https://github.com/tmux/tmux.git &&\
 	cd tmux && \
 	sh autogen.sh && \

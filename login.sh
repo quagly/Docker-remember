@@ -1,4 +1,5 @@
 #!/bin/bash
 
 # login shell
-docker run --rm -it full bash -il
+# mount ssh directory for keys
+docker run --volume ~/.ssh:/home/developer/.ssh --rm -it full bash -il

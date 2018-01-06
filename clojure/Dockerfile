@@ -1,5 +1,5 @@
 FROM groovyenv
-LABEL maintainer="Michael West <Michael.West@cambiahealth.com>"
+LABEL maintainer="Michael West <quagly@gmail.com>"
 
 USER developer
 ENV HOME  /home/developer

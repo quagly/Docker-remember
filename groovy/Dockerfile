@@ -1,5 +1,5 @@
 FROM python
-LABEL maintainer="Michael West <Michael.West@cambiahealth.com>"
+LABEL maintainer="Michael West <quagly@gmail.com>"
 # uses login shell but that doesn't work with install sdk
 # it writes the files to $HOME/~/.sdkman instead of $HOME/.sdkman
 # but be related to echo problem below
@@ -8,6 +8,8 @@ USER developer
 ENV HOME  /home/developer
 WORKDIR $HOME
 
+# had trouble with sh and sdkman as noted below
+# should I set the shell back after sdk is complete?
 SHELL ["/bin/bash", "--login", "-c"]
 
 # install sdk
@@ -20,7 +22,7 @@ RUN curl -s "https://get.sdkman.io" | bash
 # RUN echo -e "export SDKMAN_DIR=/home/developer/.sdkman" >> $HOME/.bash_profile
 # RUN	echo -e 'source "/home/developer/.sdkman/bin/sdkman-init.sh"' >> $HOME/.bash_profile
 
-# need 'yes' because sdk is a shell function, not an executable
+# need 'yes' because sdk is a shell function, not an executable, if using sh instead of bash
 # must use login shell to pickup profile environment from above
 RUN sdk install java && \
 	  sdk install groovy && \

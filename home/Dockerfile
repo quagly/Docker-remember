@@ -16,8 +16,6 @@ RUN stow bash;\
 
 WORKDIR $HOME
 
-
-
 # configure vim
 RUN git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
 # command to install plugins, returns non-zero exit code but works.

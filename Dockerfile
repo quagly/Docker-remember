@@ -74,8 +74,6 @@ RUN stow bash;\
 
 WORKDIR $HOME
 
-
-
 # configure vim
 RUN git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
 # command to install plugins, returns non-zero exit code but works.
@@ -225,4 +223,5 @@ RUN lein deps
 WORKDIR /home/developer
 # get test script and run it
 COPY test.sh /home/developer
+COPY .gitconfig /home/developer
 CMD /home/developer/test.sh

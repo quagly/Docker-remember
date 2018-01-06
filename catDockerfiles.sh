@@ -11,11 +11,17 @@ cat home/Dockerfile python/Dockerfile groovy/Dockerfile clojure/Dockerfile | sed
 # note that I am hardcoding /home/developer
 # because $HOME will resolve to this scripts context
 # not the containers
+
+# also adding .gitconfig here
+# because I use ssh keys for git auth
+# in containers but those are mounted at run time
+# so keys are not available during build
 cat <<HERE >> Dockerfile
 
 WORKDIR /home/developer
 # get test script and run it
 COPY test.sh /home/developer
+COPY .gitconfig /home/developer
 CMD /home/developer/test.sh
 HERE
 

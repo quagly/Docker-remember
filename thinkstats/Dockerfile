@@ -14,4 +14,9 @@ RUN conda update conda && \
 # make notebook directory
 RUN mkdir /opt/notebooks
 
+# where should this go?  not /tmp
+COPY start.sh /tmp/start.sh
+EXPOSE 8888
+CMD ["/tmp/start.sh"]
+
 

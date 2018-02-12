@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
-#regence.py ###
+#proxy.py ###
 #
 # Purpose:
 #   process Dockerfile as mustache template
 #   and add http proxy and change epel repository to use http
-#   so that it will run on work desktop
+#   so that it will run on desktop behind proxy
 #
 # Created by: Michael West
 # Date 2017-Jul-03
@@ -28,5 +28,5 @@ renderer = pystache.Renderer(
     missing_tags='strict'
 )
 
-with open('Dockerfile.regence', 'w') as f:
+with open('Dockerfile.proxy', 'w') as f:
     f.write(renderer.render_name('Dockerfile', data))

@@ -105,23 +105,24 @@ ENV PYTHON_CONFIGURE_OPTS="--enable-shared"
 # and set default global python.
 # Note that default version takes effect at login
 # not in this file
-RUN pyenv install 2.7.14 && \
-  pyenv install 3.4.7 && \
-  pyenv install 3.5.4 && \
-  pyenv install 3.6.4 && \
+RUN pyenv install 2.7.15 && \
+  pyenv install 3.4.8 && \
+  pyenv install 3.5.5 && \
+  pyenv install 3.6.5 && \
   pyenv rehash && \
-  pyenv global 3.6.4
+  pyenv global 3.6.5
 
 # use this python version for the remaining python commands
 # this works great for the docker build
 # but breaks use of a container as .python-version files
 # are ignored when this is set
 # docker does not seem to support unseting environmnent variables in a build
-ENV PYENV_VERSION=3.6.4
+ENV PYENV_VERSION=3.6.5
 
 # install application demonstrating using tox to test multiple python versions
-# and coverage report and api documentation
-RUN pip --no-cache-dir install tox
+# and coverage rep4ort and api documentation
+RUN pip --no-cache-dir  install --upgrade pip && \
+  pip --no-cache-dir install tox
 
 # get my cfn-manage python project
 RUN echo '20171230' >/dev/null && \
@@ -137,6 +138,12 @@ RUN python ./setup.py develop
 RUN echo '20171227' >/dev/null && \
 		git clone https://github.com/quagly/cfn-use.git ~/python/cfn-use && \
     pip --no-cache-dir install -r ~/python/cfn-use/requirements.txt
+
+# get my cfn-use python project
+# and install dependencies into default python
+RUN echo '20180606' >/dev/null && \
+		git clone https://github.com/quagly/cfn-simplified.git ~/python/cfn-simplified && \
+    pip --no-cache-dir install -r ~/python/cfn-simplified/requirements.txt
 
 # set default AWS region
 RUN mkdir ~/.aws && \
@@ -183,42 +190,6 @@ RUN sdk flush broadcast && \
 # get my groovy project
  RUN echo '20170629' >/dev/null;\
     git clone https://github.com/quagly/neo4j-experiments-as-tests.git ~/groovy/neo4j
-
-
-
-USER developer
-ENV HOME  /home/developer
-
-WORKDIR $HOME
-
-# use bash login shell
-SHELL ["/bin/bash", "--login", "-c"]
-
-# note need to used login shell to pickup sdkman java install so that lein can find java
-RUN curl -L -s http://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > \
- $HOME/bin/lein \
- && chmod 0755 $HOME/bin/lein \
- && lein upgrade
-
-# get sample code from pragmatic programmer book and unpack into clojure dir
-ADD shcloj3-code.tar.gz $HOME/clojure/
-USER root
-SHELL ["/bin/sh", "-c"]
-RUN chown -R developer:developer $HOME/clojure
-
-USER developer
-SHELL ["/bin/bash", "--login", "-c"]
-
-# get my clojure project
-RUN echo '20170815' >/dev/null;\
-    git clone https://github.com/quagly/learn-clojure.git ~/clojure/learn-clojure
-
-# resolve dependencies for sample code
-WORKDIR $HOME/clojure/code
-RUN lein deps
-WORKDIR $HOME/clojure/learn-clojure
-RUN lein deps
-
 
 WORKDIR /home/developer
 # get test script and run it

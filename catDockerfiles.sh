@@ -7,7 +7,7 @@ cp root/Dockerfile .
 # remove headers from child Dockerfiles
 # not using clojure anymore, maybe remove since it is not including in testing
 # so subject to entropy
-cat home/Dockerfile python/Dockerfile groovy/Dockerfile clojure/Dockerfile | sed s/^FROM.*// | sed s/^LABEL.*// >> Dockerfile
+cat home/Dockerfile python/Dockerfile groovy/Dockerfile | sed s/^FROM.*// | sed s/^LABEL.*// >> Dockerfile
 
 # add testing at the end
 # note that I am hardcoding /home/developer

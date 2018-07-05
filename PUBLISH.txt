@@ -16,3 +16,6 @@ docker tag full quagly/development:1.0.0
 # push
 docker push quagly/development
 docker push quagly/development:1.0.0
+
+# view the tagged containers here
+https://hub.docker.com/r/quagly/development/tags/

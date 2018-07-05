@@ -8,13 +8,13 @@ docker run -it {{NAME}} bash
 docker run -it {{NAME}} bash -l
 
 # get root shell on running container
-docker exec -u 0 -it {{NAME}} bash 
+docker exec -u 0 -it {{NAME}} bash
 
 # go to project
 cd python
 
 # run tests, coverage, and generate api docs
-tox 
+tox
 
 # exit
 exit
@@ -25,7 +25,7 @@ docker system prune -a
 # show disk usage
 docker system df
 
-# list all containers and images
+# list all running containers and images
 docker ps -a
 
 # list images
@@ -35,10 +35,10 @@ docker image ls
 docker rmi <Image Name>
 
 # stop all containers
-docker stop $(docker ps -a -q) 
+docker stop $(docker ps -a -q)
 
 # remove all containers
-docker rm $(docker ps -a -q) 
+docker rm $(docker ps -a -q)
 
 # remove all dangling images
 docker rmi $(docker  image ls -q --filter "dangling=true")

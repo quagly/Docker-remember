@@ -23,15 +23,16 @@ RUN pyenv install 2.7.15 && \
   pyenv install 3.4.8 && \
   pyenv install 3.5.5 && \
   pyenv install 3.6.5 && \
+  pyenv install 3.7.0 && \
   pyenv rehash && \
-  pyenv global 3.6.5
+  pyenv global 3.7.0
 
 # use this python version for the remaining python commands
 # this works great for the docker build
 # but breaks use of a container as .python-version files
 # are ignored when this is set
 # docker does not seem to support unseting environmnent variables in a build
-ENV PYENV_VERSION=3.6.5
+ENV PYENV_VERSION=3.7.0
 
 # install application demonstrating using tox to test multiple python versions
 # and coverage rep4ort and api documentation
@@ -58,6 +59,12 @@ RUN echo '20171227' >/dev/null && \
 RUN echo '20180606' >/dev/null && \
 		git clone https://github.com/quagly/cfn-simplified.git ~/python/cfn-simplified && \
     pip --no-cache-dir install -r ~/python/cfn-simplified/requirements.txt
+
+# not a python project (yet) but this is becoming my developer
+# space since all my development is in python now
+RUN echo '20180701' >/dev/null && \
+		git clone https://github.com/quagly/databricks-cli-use.git ~/databricks/databricks-cli-use && \
+    pip --no-cache-dir install databricks-cli
 
 # set default AWS region
 RUN mkdir ~/.aws && \

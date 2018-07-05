@@ -26,11 +26,13 @@ RUN yum -y install epel-release
 #	yum groups mark convert "Development Tools";\
 #  yum -y groupinstall "Development Tools";
 
-# install additional packages required to compile python
+# install additional packages required to compile python and tools
 # patch is only required by python 3.3 to patch ssl
+# libffi-devel is requires for compile python 3.7 or get a
+# No module named '_ctypes' error
 # tmux requires aclocal command from automake package.  Too bad as it only needs aclocal and automake has many depenencies.
 # zip and unzip is required by sdkman for java/groovy
-RUN yum -y install gcc git curl make patch zlib-devel bzip2-devel readline readline-devel sqllite sqlite-devel openssl openssl-devel libevent libevent-devel && \
+RUN yum -y install gcc git curl make patch zlib-devel bzip2-devel readline readline-devel sqllite sqlite-devel openssl openssl-devel libevent libevent-devel libffi libffi-devel && \
 	  yum -y install automake && \
 		yum -y install zip unzip
 
@@ -51,7 +53,7 @@ RUN mkdir /tmp/skel;\
 	 useradd -m -k /tmp/skel developer
 
 # install user packages
-RUN yum -y install stow vim;\
+RUN yum -y install stow vim jq;\
 	yum clean all
 
 # clean up yum cruft if any

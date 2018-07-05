@@ -1,12 +1,18 @@
 # to push to repo
+# update VERSION.txt file
+
+# tag git with version
+git tag -a v1.0.0 -m "includes docker-cli"
 
 # login to repo
 docker login
 username: quagly
 password: from keychain
 
-# tag 
+# tag
 docker tag full quagly/development
+docker tag full quagly/development:1.0.0
 
 # push
 docker push quagly/development
+docker push quagly/development:1.0.0

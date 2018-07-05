@@ -26,11 +26,13 @@ RUN yum -y install epel-release
 #	yum groups mark convert "Development Tools";\
 #  yum -y groupinstall "Development Tools";
 
-# install additional packages required to compile python
+# install additional packages required to compile python and tools
 # patch is only required by python 3.3 to patch ssl
+# libffi-devel is requires for compile python 3.7 or get a
+# No module named '_ctypes' error
 # tmux requires aclocal command from automake package.  Too bad as it only needs aclocal and automake has many depenencies.
 # zip and unzip is required by sdkman for java/groovy
-RUN yum -y install gcc git curl make patch zlib-devel bzip2-devel readline readline-devel sqllite sqlite-devel openssl openssl-devel libevent libevent-devel && \
+RUN yum -y install gcc git curl make patch zlib-devel bzip2-devel readline readline-devel sqllite sqlite-devel openssl openssl-devel libevent libevent-devel libffi libffi-devel && \
 	  yum -y install automake && \
 		yum -y install zip unzip
 
@@ -51,7 +53,7 @@ RUN mkdir /tmp/skel;\
 	 useradd -m -k /tmp/skel developer
 
 # install user packages
-RUN yum -y install stow vim;\
+RUN yum -y install stow vim jq;\
 	yum clean all
 
 # clean up yum cruft if any
@@ -109,15 +111,16 @@ RUN pyenv install 2.7.15 && \
   pyenv install 3.4.8 && \
   pyenv install 3.5.5 && \
   pyenv install 3.6.5 && \
+  pyenv install 3.7.0 && \
   pyenv rehash && \
-  pyenv global 3.6.5
+  pyenv global 3.7.0
 
 # use this python version for the remaining python commands
 # this works great for the docker build
 # but breaks use of a container as .python-version files
 # are ignored when this is set
 # docker does not seem to support unseting environmnent variables in a build
-ENV PYENV_VERSION=3.6.5
+ENV PYENV_VERSION=3.7.0
 
 # install application demonstrating using tox to test multiple python versions
 # and coverage rep4ort and api documentation
@@ -144,6 +147,12 @@ RUN echo '20171227' >/dev/null && \
 RUN echo '20180606' >/dev/null && \
 		git clone https://github.com/quagly/cfn-simplified.git ~/python/cfn-simplified && \
     pip --no-cache-dir install -r ~/python/cfn-simplified/requirements.txt
+
+# not a python project (yet) but this is becoming my developer
+# space since all my development is in python now
+RUN echo '20180701' >/dev/null && \
+		git clone https://github.com/quagly/databricks-cli-use.git ~/databricks/databricks-cli-use && \
+    pip --no-cache-dir install databricks-cli
 
 # set default AWS region
 RUN mkdir ~/.aws && \

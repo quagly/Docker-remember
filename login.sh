@@ -2,7 +2,9 @@
 
 # login shell
 # mount ssh directory for keys
-# I'm naming the container now since I only every use one
+# I'm naming the container now since I only ever use one
+
+# plan to move to docker compose for this setup
 
 # example volume syntax
 # mounts are read only since I don't want to mess up the host from the container
@@ -20,6 +22,7 @@ docker run \
   --name full-running \
   --mount type=bind,source=${HOME}/.ssh,target=/home/developer/.ssh,readonly \
   --mount type=bind,source=${HOME}/.aws,target=/home/developer/.aws,readonly \
+  --mount type=bind,source=${HOME}/.docker-extras,target=/home/developer/.docker-extras,readonly \
   --rm -it \
   full \
   bash -il
